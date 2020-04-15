@@ -5,12 +5,13 @@ import os
 class GiStat:
     STATISTIC_URL = 'https://gismoldova.maps.arcgis.com/apps/opsdashboard/index.html#/d274da857ed345efa66e1fbc959b021b'
 
-    def __init__(self, debug=False, firefox_path='./geckodriver'):
+    def __init__(self, debug=False, firefox_path='./geckodriver', timeout=120):
         if not debug:
             # Hide Browser
             os.environ['MOZ_HEADLESS'] = '1'
 
         self.driver = webdriver.Firefox(executable_path=firefox_path)
+        self.driver.set_script_timeout(timeout)
         self._initialized = False
 
     def load(self):
@@ -58,7 +59,6 @@ class GiStat:
         if not self._initialized:
             raise Exception('Need to initialize (load)')
 
-        self.driver.set_script_timeout(60)
         js = '''
             let elements = $("div.dock-element:eq(10) .external-html");
             let totalElements = elements.length;
