@@ -5,20 +5,17 @@ import os
 class GiStat:
     STATISTIC_URL = 'https://gismoldova.maps.arcgis.com/apps/opsdashboard/index.html#/d274da857ed345efa66e1fbc959b021b'
 
-    def __init__(self, debug=False):
+    def __init__(self, debug=False, firefox_path='./geckodriver'):
         if not debug:
             # Hide Browser
             os.environ['MOZ_HEADLESS'] = '1'
 
-        self.driver = webdriver.Firefox(executable_path='./geckodriver')
+        self.driver = webdriver.Firefox(executable_path=firefox_path)
         self._initialized = False
-        self._main_elm = None
-        self.start_time = None
 
     def load(self):
         self.driver.get(self.STATISTIC_URL)
         self._initialized = True
-        self._main_elm = self.driver.find_element_by_css_selector('body')
 
     def get_general_stat(self):
         if not self._initialized:
