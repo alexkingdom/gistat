@@ -6,6 +6,9 @@ class GiStat:
     STATISTIC_URL = 'https://gismoldova.maps.arcgis.com/apps/opsdashboard/index.html#/d274da857ed345efa66e1fbc959b021b'
 
     def __init__(self, debug=False, firefox_path='./geckodriver', timeout=120):
+        if not os.path.exists(firefox_path):
+            raise Exception('Cannot find geckodriver!')
+
         if not debug:
             # Hide Browser
             os.environ['MOZ_HEADLESS'] = '1'
@@ -24,11 +27,11 @@ class GiStat:
 
         js = '''
         let mainStatistics = {
-            'confirmed': $("div.dock-element:eq(3) text").eq(1).text(),
-            'recovered': $("div.dock-element:eq(4) text").eq(1).text(),
-            'suspected': $("div.dock-element:eq(5) text").eq(1).text(),
-            'deaths'   : $("div.dock-element:eq(6) text").eq(0).text(),
-            'monitored': $("div.dock-element:eq(7) text").eq(1).text()
+            'confirmed': $("div.dock-element:eq(4) text").eq(1).text(),
+            'recovered': $("div.dock-element:eq(5) text").eq(1).text(),
+            'suspected': $("div.dock-element:eq(6) text").eq(1).text(),
+            'deaths'   : $("div.dock-element:eq(7) text").eq(0).text(),
+            'monitored': $("div.dock-element:eq(8) text").eq(1).text()
         };
         
         return mainStatistics;
@@ -44,7 +47,7 @@ class GiStat:
 
         js = '''
         let country = [];
-        $("div.dock-element:eq(10) .external-html").each(function(i, el) {
+        $("div.dock-element:eq(11) .external-html").each(function(i, el) {
             country.push({'country': $(el).find('span').eq(0).text().trim(), 'cases': $(el).find('span').eq(4).text().trim()})
         });
 
@@ -60,7 +63,7 @@ class GiStat:
             raise Exception('Need to initialize (load)')
 
         js = '''
-            let elements = $("div.dock-element:eq(10) .external-html");
+            let elements = $("div.dock-element:eq(11) .external-html");
             let totalElements = elements.length;
             let n = 0;
             
@@ -113,7 +116,8 @@ class GiStat:
         return cases_by_country
 
     def stop(self):
-        self.driver.quit()
+        if hasattr(self, 'driver'):
+            self.driver.quit()
 
     def __enter__(self):
         return self
