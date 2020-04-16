@@ -3,13 +3,13 @@ from distutils.core import setup
 setup(
     name='gistat',
     packages=['gistat'],
-    version='v0.2.1',
+    version='v0.2.2',
     license='apache-2.0',
     description='Parsing https://gismoldova.maps.arcgis.com statistics related to covid-19 (Coronavirus)',
     author='Alex H.',
     author_email='alexander.habasescu@gmail.com',
     url='https://github.com/alexkingdom/gistat',
-    download_url='https://github.com/alexkingdom/gistat/archive/v0.2.1.tar.gz',
+    download_url='https://github.com/alexkingdom/gistat/archive/v0.2.2.tar.gz',
     keywords=['covid-19 statistics', 'Moldova covid-19', 'Parser gismoldova'],
     install_requires=[
         'selenium',
@@ -23,5 +23,6 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
 )

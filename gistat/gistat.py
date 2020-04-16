@@ -1,4 +1,5 @@
 from selenium import webdriver
+from datetime import datetime
 import os
 
 
@@ -114,6 +115,67 @@ class GiStat:
         cases_by_country = self.driver.execute_async_script(js)
 
         return cases_by_country
+
+    def get_cases_by_age(self):
+        if not self._initialized:
+            raise Exception('Need to initialize (load)')
+
+        js = '''
+            const regexp = /([<>0-9]+(?:\s*-\s*[0-9]+)?) (luni|ani) \s*([0-9]+)/g;
+            let output = [];
+            $("div.dock-element:eq(12) .amcharts-graph-column").each(function(i, el) {
+                var aria = $(el).attr('aria-label');
+                if (typeof aria == 'string') {
+                    var parsed = [...aria.matchAll(regexp)];
+                    var range = parsed[0][1].replace(' ', '');
+                    var range_type = parsed[0][2];
+                    var cases = parsed[0][3];
+                  output.push({
+                    'range': range,
+                    'type': range_type,
+                    'cases': cases
+                  });
+                }
+            });
+    
+            return output;
+        '''
+
+        cases_by_age = self.driver.execute_script(js)
+
+        return cases_by_age
+
+    def get_other_cases(self):
+        if not self._initialized:
+            raise Exception('Need to initialize (load)')
+
+        js = '''
+            let other_stat = {
+                'men': $("div.dock-element:eq(13) .amcharts-legend-value").eq(0).text().trim(),
+                'women': $("div.dock-element:eq(13) .amcharts-legend-value").eq(1).text().trim(),
+                'cases_imported': $("div.dock-element:eq(15) .amcharts-pie-label tspan").eq(4).text().trim(),
+                'cases_local': $("div.dock-element:eq(15) .amcharts-pie-label:eq(0) tspan").eq(1).text().trim(),
+                'pregnant': $("div.dock-element:eq(17) .responsive-text-label text").eq(2).text().trim()
+            };
+            
+            return other_stat;
+        '''
+
+        other_stat = self.driver.execute_script(js)
+
+        return other_stat
+
+    def get_update_time(self):
+        if not self._initialized:
+            raise Exception('Need to initialize (load)')
+
+        js = '''
+            return $("div.dock-element:eq(19) .external-html strong").text();
+        '''
+
+        update_time = self.driver.execute_script(js)
+
+        return datetime.strptime(update_time, '%d/%m/%Y,%H:%M')
 
     def stop(self):
         if hasattr(self, 'driver'):
