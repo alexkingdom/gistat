@@ -7,8 +7,8 @@ if __name__ == "__main__":
         stat.load()
 
         print(stat.get_general_stat())
-        print('by country')
-        print(stat.get_cases_by_country())
+        print('by city')
+        print(stat.get_cases_by_city())
         print('Cases by age')
         print(stat.get_cases_by_age())
         print('Get other cases')
@@ -16,8 +16,8 @@ if __name__ == "__main__":
         print('Was updated')
         print(stat.get_update_time())
 
-        print('by country full')
+        print('by city full')
         # This operation is very expensive.
-        print(stat.get_full_cases_by_country())
+        print(stat.get_full_cases_by_city())
 
     print('Execution time: {:.6}'.format(time.time() - start))

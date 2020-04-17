@@ -42,24 +42,24 @@ class GiStat:
 
         return main_statistics
 
-    def get_cases_by_country(self):
+    def get_cases_by_city(self):
         if not self._initialized:
             raise Exception('Need to initialize (load)')
 
         js = '''
-        let country = [];
+        let cites = [];
         $("div.dock-element:eq(11) .external-html").each(function(i, el) {
-            country.push({'country': $(el).find('span').eq(0).text().trim(), 'cases': $(el).find('span').eq(4).text().trim()})
+            cites.push({'city': $(el).find('span').eq(0).text().trim(), 'cases': $(el).find('span').eq(4).text().trim()})
         });
 
-        return country;
+        return cites;
         '''
 
-        cases_by_country = self.driver.execute_script(js)
+        cases_by_city = self.driver.execute_script(js)
 
-        return cases_by_country
+        return cases_by_city
 
-    def get_full_cases_by_country(self):
+    def get_full_cases_by_city(self):
         if not self._initialized:
             raise Exception('Need to initialize (load)')
 
@@ -76,9 +76,9 @@ class GiStat:
             const myLoop = async _ => {
                 while(n < totalElements) {
                     let cityName = elements.eq(n).find('span').eq(0).text().trim();
-                    let countryDetailsName = $(".ember-view div span.esriDateValue").parent().text();
+                    let cityDetailsName = $(".ember-view div span.esriDateValue").parent().text();
             
-                    if (countryDetailsName !== '' && countryDetailsName.indexOf(cityName) !== -1) {
+                    if (cityDetailsName !== '' && cityDetailsName.indexOf(cityName) !== -1) {
                         let displayInfo = $(".feature-description.ember-view span.esriNumericValue");
             
                         let confirmedCases = displayInfo.eq(0).text();
@@ -112,9 +112,9 @@ class GiStat:
             });
         '''
 
-        cases_by_country = self.driver.execute_async_script(js)
+        cases_by_city = self.driver.execute_async_script(js)
 
-        return cases_by_country
+        return cases_by_city
 
     def get_cases_by_age(self):
         if not self._initialized:
