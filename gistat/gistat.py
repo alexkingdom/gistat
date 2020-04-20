@@ -6,15 +6,24 @@ import os
 class GiStat:
     STATISTIC_URL = 'https://gismoldova.maps.arcgis.com/apps/opsdashboard/index.html#/d274da857ed345efa66e1fbc959b021b'
 
-    def __init__(self, debug=False, firefox_path='./geckodriver', timeout=120):
+    def __init__(self, debug=False, firefox_path=None, timeout=120):
+        if firefox_path is None:
+            if os.name != 'nt':
+                firefox_path = './geckodriver'
+            else:
+                firefox_path = './geckodriver.exe'
+
         if not os.path.exists(firefox_path):
             raise Exception('Cannot find geckodriver!')
+
+        service_log_path = 'geckodriver.log'
 
         if not debug:
             # Hide Browser
             os.environ['MOZ_HEADLESS'] = '1'
+            service_log_path = os.path.devnull
 
-        self.driver = webdriver.Firefox(executable_path=firefox_path)
+        self.driver = webdriver.Firefox(executable_path=firefox_path, service_log_path=service_log_path)
         self.driver.set_script_timeout(timeout)
         self._initialized = False
 
