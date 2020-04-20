@@ -11,10 +11,12 @@ class GiStat:
             if os.name != 'nt':
                 firefox_path = './geckodriver'
             else:
-                firefox_path = './geckodriver.exe'
+                firefox_path = './geckodriver.exe1'
 
         if not os.path.exists(firefox_path):
-            raise Exception('Cannot find geckodriver!')
+            raise Exception('Cannot find geckodriver! Can be download from here: '
+                            'https://github.com/mozilla/geckodriver/releases and should be extracted in the root of '
+                            'project')
 
         service_log_path = 'geckodriver.log'
 
