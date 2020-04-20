@@ -11,7 +11,7 @@ class GiStat:
             if os.name != 'nt':
                 firefox_path = './geckodriver'
             else:
-                firefox_path = './geckodriver.exe1'
+                firefox_path = './geckodriver.exe'
 
         if not os.path.exists(firefox_path):
             raise Exception('Cannot find geckodriver! Can be download from here: '
