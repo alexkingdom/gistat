@@ -30,12 +30,12 @@ class GiStat:
         self._initialized = False
 
     def load(self):
-        self.driver.get(self.STATISTIC_URL)
-        self._initialized = True
+        if not self._initialized:
+            self.driver.get(self.STATISTIC_URL)
+            self._initialized = True
 
     def get_general_stat(self):
-        if not self._initialized:
-            raise Exception('Need to initialize (load)')
+        self.load()
 
         js = '''
         let mainStatistics = {
@@ -54,8 +54,7 @@ class GiStat:
         return main_statistics
 
     def get_cases_by_city(self):
-        if not self._initialized:
-            raise Exception('Need to initialize (load)')
+        self.load()
 
         js = '''
         let cites = [];
@@ -71,8 +70,7 @@ class GiStat:
         return cases_by_city
 
     def get_full_cases_by_city(self):
-        if not self._initialized:
-            raise Exception('Need to initialize (load)')
+        self.load()
 
         js = '''
             let elements = $("div.dock-element:eq(11) .external-html");
@@ -128,8 +126,7 @@ class GiStat:
         return cases_by_city
 
     def get_cases_by_age(self):
-        if not self._initialized:
-            raise Exception('Need to initialize (load)')
+        self.load()
 
         js = '''
             const regexp = /([<>0-9]+(?:\s*-\s*[0-9]+)?) (luni|ani) \s*([0-9]+)/g;
@@ -157,8 +154,7 @@ class GiStat:
         return cases_by_age
 
     def get_other_cases(self):
-        if not self._initialized:
-            raise Exception('Need to initialize (load)')
+        self.load()
 
         js = '''
             let other_stat = {
@@ -177,8 +173,7 @@ class GiStat:
         return other_stat
 
     def get_update_time(self):
-        if not self._initialized:
-            raise Exception('Need to initialize (load)')
+        self.load()
 
         js = '''
             return $("div.dock-element:eq(19) .external-html strong").text();

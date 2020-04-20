@@ -16,9 +16,7 @@ You need to download latest version of it from https://github.com/mozilla/geckod
 ```Python
 import gistat
 
-with gistat.GiStat(debug=True) as stat:
-    stat.load()
-
+with gistat.GiStat() as stat:
     print(stat.get_general_stat())
 ```
 Other usage you will find in examples.py
