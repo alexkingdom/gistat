@@ -3,9 +3,7 @@ import time
 
 if __name__ == "__main__":
     start = time.time()
-    with gistat.GiStat(debug=True) as stat:
-        stat.load()
-
+    with gistat.GiStat() as stat:
         print(stat.get_general_stat())
         print('by city')
         print(stat.get_cases_by_city())
