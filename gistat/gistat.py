@@ -98,8 +98,6 @@ class GiStat:
                             'monitored': monitoredCases
                         });
             
-                        console.log(confirmedCases, deaths, recoveredCases, monitoredCases);
-            
                         // Go Next
                         n++;
                         elements.eq(n).click();
