@@ -54,7 +54,10 @@ class GiStat:
         js = '''
         let cites = [];
         $("div.dock-element:eq(11) .external-html").each(function(i, el) {
-            cites.push({'city': $(el).find('span').eq(0).text().trim(), 'cases': $(el).find('span').eq(4).text().trim()})
+            cites.push({
+                'city': $(el).find('span').eq(0).text().trim(),
+                'cases': $(el).find('span').eq(4).text().trim().replace(',', '')
+             });
         });
 
         return cites;
@@ -85,10 +88,10 @@ class GiStat:
                     if (cityDetailsName !== '' && cityDetailsName.indexOf(cityName) !== -1) {
                         let displayInfo = $(".feature-description.ember-view span.esriNumericValue");
             
-                        let confirmedCases = displayInfo.eq(0).text();
-                        let deaths = displayInfo.eq(1).text();
-                        let recoveredCases = displayInfo.eq(2).text();
-                        let monitoredCases = displayInfo.eq(3).text();
+                        let confirmedCases = displayInfo.eq(0).text().replace(',', '');
+                        let deaths = displayInfo.eq(1).text().replace(',', '');
+                        let recoveredCases = displayInfo.eq(2).text().replace(',', '');
+                        let monitoredCases = displayInfo.eq(3).text().replace(',', '');
             
                         details.push({
                             'city': cityName,
