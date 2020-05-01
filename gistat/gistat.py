@@ -34,11 +34,11 @@ class GiStat:
 
         js = '''
         let mainStatistics = {
-            'confirmed': $("div.dock-element:eq(4) text").eq(1).text(),
-            'recovered': $("div.dock-element:eq(5) text").eq(1).text(),
-            'suspected': $("div.dock-element:eq(6) text").eq(1).text(),
-            'deaths'   : $("div.dock-element:eq(7) text").eq(0).text(),
-            'monitored': $("div.dock-element:eq(8) text").eq(1).text()
+            'confirmed': $("div.dock-element:eq(4) text").eq(1).text().replace(',', ''),
+            'recovered': $("div.dock-element:eq(5) text").eq(1).text().replace(',', ''),
+            'suspected': $("div.dock-element:eq(6) text").eq(1).text().replace(',', ''),
+            'deaths'   : $("div.dock-element:eq(7) text").eq(0).text().replace(',', ''),
+            'monitored': $("div.dock-element:eq(8) text").eq(1).text().replace(',', '')
         };
         
         return mainStatistics;
